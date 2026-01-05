@@ -48,7 +48,7 @@ kafka:
   state_log_min_isr: 1
   default_replication_factor: 1
   min_insync_replicas: 1
-  cruise_control: true`
+  cruise_control: false
 
 
 
