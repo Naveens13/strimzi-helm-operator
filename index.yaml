@@ -1,0 +1,44 @@
+apiVersion: v1
+entries:
+  strimzi-kafka-operator:
+  - apiVersion: v2
+    appVersion: 0.49.1
+    created: "2026-01-05T16:44:30.073309399+05:30"
+    description: 'Strimzi: Apache Kafka running on Kubernetes'
+    digest: f36ffbd4dd5c27e34f4c7445e9df5b905fd27ad34e7ff05826cb44d4d8da4e43
+    home: https://strimzi.io/
+    icon: https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/main/documentation/logo/strimzi_logo.png
+    keywords:
+    - kafka
+    - queue
+    - stream
+    - event
+    - messaging
+    - datastore
+    - topic
+    maintainers:
+    - email: cncf-strimzi-maintainers@lists.cncf.io
+      name: Strimzi Project Maintainers
+      url: https://github.com/strimzi/governance
+    name: strimzi-kafka-operator
+    sources:
+    - https://github.com/strimzi/strimzi-kafka-operator
+    urls:
+    - https://github.com/Naveens13/strimzi-helm-operator/charts/strimzi-kafka-operator-helm-3-chart-0.49.1.tgz
+    version: 0.49.1
+  strimzi-operator-with-cluster:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-05T16:44:30.052114645+05:30"
+    dependencies:
+    - name: strimzi-kafka-operator
+      repository: https://strimzi.io/charts/
+      version: 0.49.*
+    description: Strimzi cluster operator + Kafka Cluster components
+    digest: de30098a816d7e5d4baf813ae9c02fd2e0974f48c27e07261c73b36c08c41a91
+    name: strimzi-operator-with-cluster
+    type: application
+    urls:
+    - https://github.com/Naveens13/strimzi-helm-operator/strimzi-operator-with-cluster-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-01-05T16:44:30.036470007+05:30"
