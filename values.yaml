@@ -40,6 +40,14 @@ kafka:
   name: my-cluster
   version: 4.1.1
   metadataVersion: 4.1-IV1
+  plain_text_svc_type: nodeport
+  tls_svc_type: nodeport
+  offset_topic_replication_factor: 1
+  state_log_replication_factor: 1
+  state_log_min_isr: 1
+  default_replication_factor: 1
+  min_insync_replicas: 1
+  cruise_control: true`
 
 
 
