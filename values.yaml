@@ -1,0 +1,45 @@
+kafkanodepool:
+  - name: controller
+    enabled: true
+    replicas: 1
+    roles: 
+      - controller
+    storage_type: jbod
+    volumes_type: persistent-claim
+    volume_class: longhorn
+    volume_size: 1Gi
+    volume_kraftMetadata: shared
+    volume_deleteClaim: false
+  
+  - name: broker
+    enabled: true
+    replicas: 1
+    roles: 
+      - broker
+    storage_type: jbod
+    volumes_type: persistent-claim
+    volume_class: longhorn
+    volume_size: 1Gi
+    volume_kraftMetadata: shared
+    volume_deleteClaim: false
+
+  - name: dual_role
+    enabled: false
+    replicas: 1
+    roles: 
+      - controller
+      - broker
+    storage_type: jbod
+    volumes_type: persistent-claim
+    volume_class: longhorn
+    volume_size: 1Gi
+    volume_kraftMetadata: shared
+    volume_deleteClaim: false
+
+kafka:
+  name: my-cluster
+  version: 4.1.1
+  metadataVersion: 4.1-IV1
+
+
+

@@ -1,0 +1,32 @@
+{{- if .Values.kafka.enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: Kafka
+metadata:
+  name: {{ .Values.kafka.name}}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  kafka:
+    version: {{ .Values.kafka.version }}
+    metadataVersion: {{ .Values.kafka.metadataVersion }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: {{ .Values.kafka.plain_text_svc_type }}
+        tls: false
+      - name: tls
+        port: 9093
+        type: {{ .Values.kafka.tls_svc_type }}
+        tls: true
+    config:
+      offsets.topic.replication.factor: {{ .Values.kafka.offset_topic_replication_factor }}
+      transaction.state.log.replication.factor: {{ .Values.kafka.state_log_replication_factor }}
+      transaction.state.log.min.isr: {{ .Values.kafka.state_log_min_isr }}
+      default.replication.factor: {{ .Values.kafka.default_replication_factor }}
+      min.insync.replicas: {{ .Values.kafka.min_insync_replicas }}
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+{{- if .Values.kafka.cruise_control }}
+  cruiseControl: {}
+{{- end}}
+{{- end}}

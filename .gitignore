@@ -1,0 +1,12 @@
+charts/*.tgz
+charts/*.prov
+Chart.lock
+
+# Helm cache (optional but safe)
+.helm/
+.helm-cache/
+.helm-repository/
+
+# Helm lint / template output
+*.rendered.yaml
+
