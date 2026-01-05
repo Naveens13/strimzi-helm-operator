@@ -38,6 +38,7 @@ kafkanodepool:
 
 kafka:
   name: my-cluster
+  enabled: true
   version: 4.1.1
   metadataVersion: 4.1-IV1
   plain_text_svc_type: nodeport
