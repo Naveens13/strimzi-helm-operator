@@ -65,4 +65,4 @@ kafkabridge:
   http_port: 8080
 
 all_in_one:
-  enabled: true
+  enabled: false
