@@ -1,0 +1,97 @@
+{{ - if .Values.all_in_one.enabled}}
+
+# KafkaNodePool broker and controller
+{{- range .Values.kafkanodepool }}
+{{- if .enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.kafka.name }}
+spec:
+  replicas: {{ .replicas }}
+  roles:
+{{- range .roles }}
+    - {{ . }}
+{{- end }}
+  storage:
+    type: {{ .storage_type }}
+    volumes:
+      - id: 0
+        type: {{ .volumes_type }}
+        size: {{ .volume_size }}
+        class: {{ .volume_class }}
+        kraftMetadata: {{ .volume_kraftMetadata }}
+        deleteClaim: {{ .volume_deleteClaim }}
+---
+{{- end }}
+{{- end }}
+
+#Kafka Cluster Configuration
+{{- if .Values.kafka.enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: Kafka
+metadata:
+  name: {{ .Values.kafka.name}}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  kafka:
+    version: {{ .Values.kafka.version }}
+    metadataVersion: {{ .Values.kafka.metadataVersion }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: {{ .Values.kafka.plain_text_svc_type }}
+        tls: false
+      - name: tls
+        port: 9093
+        type: {{ .Values.kafka.tls_svc_type }}
+        tls: true
+    config:
+      offsets.topic.replication.factor: {{ .Values.kafka.offset_topic_replication_factor }}
+      transaction.state.log.replication.factor: {{ .Values.kafka.state_log_replication_factor }}
+      transaction.state.log.min.isr: {{ .Values.kafka.state_log_min_isr }}
+      default.replication.factor: {{ .Values.kafka.default_replication_factor }}
+      min.insync.replicas: {{ .Values.kafka.min_insync_replicas }}
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+{{- if .Values.kafka.cruise_control }}
+  cruiseControl: {}
+---
+{{- end}}
+{{- end}}
+
+# KafkaTopic replication and Partitions
+{{- if .Values.kafkatopic.enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+metadata:
+  name: {{ .Values.kafkatopic.name }}
+  labels:
+    strimzi.io/cluster: {{ .Values.kafka.name }}
+spec:
+  partitions: {{ .Values.kafkatopic.partitions}}
+  replicas: {{ .Values.kafkatopic.replicas }}
+  config:
+    retention.ms: {{ .Values.kafkatopic.retention_ms}}
+    segment.bytes: 1073741824
+---
+{{- end }}
+
+#KafkaBridge - Static bootstrap server and replicas
+{{ - if .Values.kafkabridge.enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaBridge
+metadata:
+  name: {{ .Values.kafkabridge.name }}
+spec:
+  replicas: {{ .Values.kafkabridge.replicas }}
+  bootstrapServers: 10.0.1.4:31385
+  http:
+    port: {{ .Values.kafkabridge.http_port}}
+---
+{{ - end}}
+{{ - end}}

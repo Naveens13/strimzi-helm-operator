@@ -50,5 +50,19 @@ kafka:
   min_insync_replicas: 1
   cruise_control: false
 
+kafkatopic:
+  name: my-topic
+  enabled: true
+  partitions: 1
+  replicas: 1
+  retention_ms: 7200000
 
+kafkabridge:
+  name: my-bridge
+  enabled: true
+  replicas: 1
+  bootstrapServers:
+  http_port: 8080
 
+all_in_one:
+  enabled: true
